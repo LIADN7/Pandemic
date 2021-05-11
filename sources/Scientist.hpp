@@ -3,15 +3,13 @@
 
 namespace pandemic{
     class Scientist: public Player{
-        string _role;
-        int _n;
+        int n;
     public:
-        Scientist(Board board, City city, int n)
-            : Player(board, city), _role("Scientist"), _n(n){}
+        Scientist(Board& board, City city, int num)
+            : Player(board, city), n(num){}
 
-        const string role(){
-            return _role;
-        }
+        const string role();
+        
         Scientist& discover_cure(Color color);
     };
 }

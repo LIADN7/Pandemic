@@ -5,12 +5,10 @@ namespace pandemic{
     class FieldDoctor: public Player{
         string _role;
     public:
-        FieldDoctor(Board board, City city)
-            : Player(board, city), _role("FieldDoctor"){}
+        FieldDoctor(Board& board, City city)
+            : Player(board, city){}
 
-        const string role(){
-            return _role;
-        }
+        const string role();
         FieldDoctor& treat(City city);
     };
 }

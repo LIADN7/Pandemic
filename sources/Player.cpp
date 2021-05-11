@@ -13,8 +13,9 @@ namespace pandemic{
     }
     
     Player& Player::drive(City city){
-        //City[] x = game.getMap(city).getConnected;
-        array<City, 6> x =game->getMap(this->lock).getConnected();
+        if(city==nullCity){throw exception();}
+        array<City, 6> x =game->arr[lock].mp;
+        //  getMap(lock).getConnected();
         for(unsigned int i=0;i<x.size();i++){
             if(x[i]==city){
                 lock=city;
@@ -27,15 +28,6 @@ namespace pandemic{
     }
 
     Player& Player::fly_charter(City city){
-        if(card.find(city)==card.end()){throw exception();}
-        else if(card.at(city)==false){throw exception();}
-        card[city]=false;
-        lock=city;
-        numCards--;
-        return *this;
-    }
-
-    Player& Player::fly_direct(City city){
         if(card.find(lock)==card.end()){throw exception();}
         else if(card.at(lock)==false){throw exception();}
         card[lock]=false;
@@ -43,24 +35,36 @@ namespace pandemic{
         numCards--;
         return *this;
     }
+
+    Player& Player::fly_direct(City city){
+        if(card.find(city)==card.end()){throw exception();}
+        else if(card.at(city)==false){throw exception();}
+        card[city]=false;
+        lock=city;
+        numCards--;
+        return *this;
+    }
     
     Player& Player::fly_shuttle(City city){
-        if((game->getMap(lock).re!=true)||(game->getMap(city).re!=true)){throw exception();}
+        if((game->arr[lock].re!=true)||(game->arr[city].re!=true)){throw exception();}
+        else if(city==lock){throw exception();}
         lock=city;
         return *this;
     }
 
-    void Player::build(){
+    Player& Player::build(){
         if(card.find(lock)==card.end()){throw exception();}
-        if(game->arr[lock].re!=true){
+        else if(card[lock]==false){throw exception();}
+        else if(game->arr[lock].re!=true){
             card[lock]=false;
             numCards--;
             game->arr[lock].re=true;
         }
+        return *this;
     }
 
-    void Player::discover_cure(Color color){
-        if(game->heal[color]==true);
+    Player& Player::discover_cure(Color color){
+        if(game->heal[color]==true){;}
         else{
             if(game->arr[lock].re!=true){throw exception();}
             int contC=0;
@@ -82,13 +86,15 @@ namespace pandemic{
             }
             game->heal[color]=true;
         }
+        return *this;
     }
 
     Player& Player::treat(City city){
         Color c=game->arr[city].col;
         if(game->arr[city].level==0){throw exception();}
+        else if(city!=lock){throw exception();}
         else if(game->heal[c]==true){game->arr[city].level=0;}
-        game->arr[city].level--;
+        else{game->arr[city].level--;}
 
         
         

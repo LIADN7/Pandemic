@@ -5,11 +5,9 @@ namespace pandemic{
     class Dispatcher: public Player{
 
     public:
-        Dispatcher(Board board, City city)
+        Dispatcher(Board& board, City city)
             : Player(board, city){}
-        const string role(){
-            return "Dispatcher";
-        }
+        const string role();
         Dispatcher& fly_direct(City city);
     };
 }

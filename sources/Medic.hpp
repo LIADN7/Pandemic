@@ -3,15 +3,16 @@
 
 namespace pandemic{
     class Medic: public Player{
-        string _role;
     public:
-        Medic(Board board, City city)
-            : Player(board, city), _role("Medic"){}
+        Medic(Board& board, City city)
+            : Player(board, city){}
 
-        const string role(){
-            return _role;
-        }
-        //////////meybe add the other function////////////
+        const string role();
+        Medic& drive(City);
+        Medic& fly_charter(City);
+        Medic& fly_direct(City);
+        Medic& fly_shuttle(City);
         Medic& treat(City city);
+
     };
 }

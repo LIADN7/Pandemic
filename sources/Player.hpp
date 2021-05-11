@@ -14,24 +14,22 @@ namespace pandemic{
         
         
         Player();
-        Player(Board& board, City city){
-            game=&board;
-            lock=city;
+        Player(Board& board, City city):game(&board),lock(city){
             numCards=0;
             
         }
            
         //~Player(){}
         City getLock(){return lock;}
-        Player& take_card(City);
-        Player& drive(City);
-        Player& fly_charter(City);
-        Player& fly_direct(City);
-        Player& fly_shuttle(City);
-        void build();
-        void discover_cure(Color);
-        Player& treat(City);
+        virtual Player& take_card(City);
+        virtual Player& drive(City);
+        virtual Player& fly_charter(City);
+        virtual Player& fly_direct(City);
+        virtual Player& fly_shuttle(City);
+        virtual Player& build();
+        virtual Player& discover_cure(Color);
+        virtual Player& treat(City);
         void remove_cards();
-        const string role();
+        virtual const string role();
     };
 }

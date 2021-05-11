@@ -20,7 +20,7 @@ namespace pandemic{
             Color col;
             bool re;
             int level;
-            bool cure;
+            
             array<City, 6 > mp;
             
 
@@ -31,7 +31,7 @@ namespace pandemic{
             gameMap(City s, Color c1, City s1, City s2=City::nullCity, City s3=City::nullCity, City s4=City::nullCity, City s5=City::nullCity, City s6=City::nullCity){
                 my=s;
                 col=c1;
-                cure=false;
+                //cure=false;
                 //int end=6;
                 /*
                 if(s2==City::nullCity){end=1;}
@@ -57,12 +57,10 @@ namespace pandemic{
             int& getLevel(){return level;}
             bool& get_res(){return re;}
             Color getColor(){return col;}
-            bool& get_cur(){return cure;}
+            
             array<City, 6> getConnected(){return mp;}
             
-            //bool& research() {return re;}
-            //void in(City);    
-            //bool is_neighbor(City);
+
     };
 
 
@@ -82,7 +80,7 @@ namespace pandemic{
         Board();
         gameMap getMap(City c){return arr[c];}
         string getCityName(City city);
-        string getColorName(Color color);
+        string getColorName(Color color) const;
         bool is_clean();
         void remove_cures();
         void remove_stations();

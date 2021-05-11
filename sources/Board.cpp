@@ -158,7 +158,7 @@ map<City, string>  enumMap ;
         return enumMap[city];    
     }
 
-    string Board::getColorName(Color color){
+    string Board::getColorName(Color color) const{
         if(color==Yellow){return "Yellow";}
         else if(color==Blue){return "Blue";}
         else if(color==Black){return "Black";}
@@ -182,33 +182,46 @@ map<City, string>  enumMap ;
         }
 
         void Board::remove_cures(){
-            for (auto const& x : arr){
-                if(x.second.level!=0){arr[x.first].getLevel()=0;}
-            }      
+            /*for (auto const& x : arr){
+                if(x.second.level!=0){arr[x.first].level=0;}
+            } */
+            for(unsigned int i=0;i<heal.size();i++){
+                heal[i]=false;
+            }     
         }
 
         void Board::remove_stations(){
             for (auto const& x : arr){
-                if(x.second.re==true){arr[x.first].get_res()=false;}
+                if(x.second.re==true){arr[x.first].re=false;}
             }      
         }
 
 
         ostream& operator<<(ostream& out, const Board& board){
-        int numRes=0;
-        int numCur=0;
-        for (auto const& x : board.arr){
-            //(x.second.re==true){arr[x.first].get_res()=false;}
-            out<<"City: "<< enumMap[x.second.my]
-            <<", Disease level: "<< to_string(x.second.level)
-            <<" \n"
-            ;
-            if(x.second.re==true){numRes++;}
-            if(x.second.cure==true){numCur++;}
+            int numRes=0;
+            int numCur=0;
+            for (auto const& x : board.arr){
+                //(x.second.re==true){arr[x.first].get_res()=false;}
+                out<<"City: "<< enumMap[x.second.my]
+                <<", Disease level: "<< to_string(x.second.level)
+                <<" \n"
+                ;
+                if(x.second.re==true){numRes++;}
             }
+
             out<<"------------------------------------\n";
             out<<"total number of researchs: "<<to_string(numRes)<<"\n";
+            string co;
+            for(unsigned int i=0; i<board.heal.size();i++){
+                if(board.heal[i]==true){
+                    numCur++;
+                    co+=board.getColorName((Color)(i))+", ";
+                    }
+            }            
             out<<"total number of cures: "<<to_string(numCur)<<"\n";
+            out<<"the cures are colored : ";
+
+             out<<co<<"\n";    
             return out;
         }
 
